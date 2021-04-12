@@ -50,18 +50,17 @@ def cooldown(comming_up):
 
 
 def monday_training():
-    heavy_leg_workout = [["BULGARIAN SQUATS - LEFT LEG", 2],["BULGARIAN SQUATS - RIGHT LEG", 2],["SQUAT JUMPS", 2],["REVERSE LUNGES", 2],["ALTERNATING INCLINE HIP THRUSTS", 2]]
-    light_chest_workout = [["PUSH UPS", 2], ["EXPLOSIVE PUSH UPS", 2], ["90 DEGREE HOLD", 2]]
-    core_A_workout = [["HIP LIFTS", 2], ["SIDE PLANK - LEFT SIDE", 2] , ["SIDE PLANK - RIGHT SIDE", 2], ["RUSSIAN TWISTS", 2]]
-    
+    heavy_leg_workout = [["BULGARIAN SQUATS - LEFT LEG", 60],["BULGARIAN SQUATS - RIGHT LEG", 60],["SQUAT JUMPS", 60],["REVERSE LUNGES", 60],["ALTERNATING INCLINE HIP THRUSTS", 60]]
+    light_chest_workout = [["PUSH UPS", 60], ["EXPLOSIVE PUSH UPS", 40], ["90 DEGREE HOLD", 20]]
+    core_A_workout = [["HIP LIFTS", 60], ["SIDE PLANK - LEFT SIDE", 30] , ["SIDE PLANK - RIGHT SIDE", 30], ["RUSSIAN TWISTS", 60]]
     warmup(heavy_leg_workout[0][0])
-   
+  
     #MAIN WORKOUT
-    cycles = 1 
+    cycles = 3 
     while cycles > 1:
         cycle(heavy_leg_workout, light_chest_workout[0][0], colors.RED, bcolors.YELLOW)
         cycle(light_chest_workout, heavy_leg_workout[0][0], colors.BLACK, bcolors.MAGENTA)
-        rest(3, heavy_leg_workout[0][0])
+        rest(60, heavy_leg_workout[0][0])
         cycles -= 1    
     
     cycle(heavy_leg_workout, light_chest_workout[0][0], colors.RED, bcolors.YELLOW)
@@ -72,7 +71,7 @@ def monday_training():
     cycles = 3
     while cycles > 1:
         cycle(core_A_workout, core_A_workout[0][0], colors.BLACK, bcolors.CYAN)
-        rest(3, core_A_workout[0][0])
+        rest(30, core_A_workout[0][0])
         cycles -= 1    
     cycle(core_A_workout, "COOLDOWN", colors.BLACK, bcolors.CYAN)
 
@@ -85,7 +84,7 @@ def friday_training():
     pass
 
 def warmup(comming_up):
-    warmup_exercises = [["ROPE JUMPING", 2],["DYNAMIC STRETCH", 2]]
+    warmup_exercises = [["ROPE JUMPING", 120],["DYNAMIC STRETCH", 180]]
     cycle(warmup_exercises, comming_up, colors.BLACK, bcolors.MAGENTA)
     switch(comming_up)
 
