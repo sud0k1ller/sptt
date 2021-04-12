@@ -5,30 +5,32 @@ import os
 
 
 class colors:
-    pass
+    BLACK = '\033[30;'
+    GREEN = '\033[92;'
+    RESET = '\033[0m'
+
 
 class bcolors:
-    pass
+    BLUE = '47m'
+    BLACK = '0m'
+    PURPLE = '45m'
 
 
 def flush():
     os.system("clear")
 
-def countdown(sec, text, color):
+def countdown(sec, text, color, bcolor):
     while sec:
-        print(str(sec) + color +  " - " + text, flush = True + colors)
+        print('\033[1m' + str(sec) + colors.RESET + '\t' + color + bcolor + text + colors.RESET)
         sec -= 1
         time.sleep(1)
         flush()
     
 def switch():
-    sec = 5
-    print("SWITCH!!", flush = True)
-    while sec:
-        print(sec)
-        sec -= 1
-        time.sleep(1)   
-        flush()
+    countdown(5, "SWITCH", colors.GREEN, bcolors.BLACK)
+    
+def rest(sec):
+    countdown(sec, "REST", colors.BLACK, bcolors.BLUE)
 
 def monday_training():
     warmup()
@@ -40,10 +42,10 @@ def friday_training():
     pass
 
 def warmup():
-    countdown(10, "ROPE JUMP")
+    countdown(120, "ROPE JUMP", colors.GREEN, bcolors.PURPLE)
     switch()
-    countdown(10, "DYNAMIC STRETCH")
-    switch()
+    countdown(180, "DYNAMIC STRETCH", colors.GREEN, bcolors.PURPLE)
+    rest(60)
 
 def cooldown():
     pass
@@ -64,6 +66,6 @@ def hard_core_workout():
     pass
 
 
-#flush()
-#monday_training()
-print("\033[45;0mTEST\033[0m")
+flush()
+monday_training()
+#print(bcolors.BLACK + colors.GREEN + "TEST" + colors.RESET)
