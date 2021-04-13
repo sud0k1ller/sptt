@@ -37,15 +37,15 @@ def countdown(sec, text, color, bcolor, comming_up):
         print("\nTRAINING TIME:")
         print(str(datetime.timedelta(seconds=int(time.time() - start_time))))
         time.sleep(1)
-        flush()
-    
+        flush()    
+
 def switch(comming_up):
    countdown(5, "SWITCH", colors.BLACK, bcolors.WHITE, comming_up)
 
 def rest(sec, comming_up):
    countdown(sec, "REST", colors.BLACK, bcolors.BLUE, comming_up)
 
-def cooldown(comming_up):
+def cooldown():
    countdown(300, "COOLDOWN", colors.BLACK, bcolors.GREEN, "END")
 
 
@@ -53,8 +53,12 @@ def monday_training():
     heavy_leg_workout = [["BULGARIAN SQUATS - LEFT LEG", 60],["BULGARIAN SQUATS - RIGHT LEG", 60],["SQUAT JUMPS", 60],["REVERSE LUNGES", 60],["ALTERNATING INCLINE HIP THRUSTS", 60]]
     light_chest_workout = [["PUSH UPS", 60], ["EXPLOSIVE PUSH UPS", 40], ["90 DEGREE HOLD", 20]]
     core_A_workout = [["HIP LIFTS", 60], ["SIDE PLANK - LEFT SIDE", 30] , ["SIDE PLANK - RIGHT SIDE", 30], ["RUSSIAN TWISTS", 60]]
+    
+    countdown(5, "COUNTDOWN", colors.BLACK, bcolors.WHITE, "WARMUP")
+    
+    #WARMUP
     warmup(heavy_leg_workout[0][0])
-  
+    
     #MAIN WORKOUT
     cycles = 3 
     while cycles > 1:
@@ -95,7 +99,8 @@ def cycle(exercises_table, first_exercise_in_next_cycle, color, bcolor):
             switch(exercises_table[index+1][0])
         else:
             countdown(exercise[1], exercise[0] , color, bcolor, first_exercise_in_next_cycle)
-
+            switch(exercises_table[index+1][0])
+            
 start_time = time.time()
 flush()
 monday_training()
