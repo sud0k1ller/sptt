@@ -3,6 +3,7 @@
 import time
 import os
 import datetime
+import keyboard
 
 class colors:
     BLACK = '\033[30;'
@@ -28,12 +29,19 @@ class bcolors:
 def flush():
     os.system("clear")
 
+def handle_keys_press():
+    if keyboard.is_pressed('space'):
+        flush()
+        print("Press [space] to continue training...")
+        keyboard.wait('space')
+        flush()	
+
 def countdown(sec, text, color, bcolor, comming_up):
     while sec:
+        handle_keys_press()
         print('\033[1m' + str(sec) + colors.RESET + '\t' + color + bcolor + text + colors.RESET)
         print('\t\033[100mCOMMING UP: ' + comming_up + colors.RESET)
         sec -= 1
-
         print("\nTRAINING TIME:")
         print(str(datetime.timedelta(seconds=int(time.time() - start_time))))
         time.sleep(1)
@@ -82,7 +90,32 @@ def monday_training():
     cooldown()
 
 def wednesday_training():
-    pass
+    back_and_arms_workout = [["SUPERMANS", 60], ["TOWEL PULL UPS", 60], ["TYI", 60], ["ONE HANDED DOORPOST ROWS - RIGHT SIDE", 30], ["ONE HANDED DOORPOST ROWS - LEFT SIDE", 30],["DIAMOND PUSH UPS", 60], ["REVERSE PUSH UPS", 60],["PIKE PUSH UPS", 60]]
+    core_B_workout = [["KNEE TO ELBOW IN PLANK", 60], ["SCISSORS", 60], ["STRAIGHT LEGS LIFTS", 60]]
+    
+    countdown(5, "COUNTDOWN", colors.BLACK, bcolors.WHITE, "WARMUP")
+    
+    #WARMUP
+    warmup(back_and_arms_workout[0][0])
+    
+    #MAIN WORKOUT
+    cycles = 3 
+    while cycles > 1:
+        cycle(back_and_arms_workout, back_and_arms_workout[0][0], colors.RED, bcolors.YELLOW)
+        rest(60, back_and_arms_workout[0][0])
+        cycles -= 1    
+    
+    cycle(back_and_arms_workout, core_B_workout[0][0], colors.BLACK, bcolors.MAGENTA)
+
+    # CORE WORKOUT
+    cycles = 3
+    while cycles > 1:
+        cycle(core_B_workout, core_B_workout[0][0], colors.BLACK, bcolors.CYAN)
+        rest(30, core_B_workout[0][0])
+        cycles -= 1    
+    cycle(core_B_workout, "COOLDOWN", colors.BLACK, bcolors.CYAN)
+
+    cooldown()
 
 def friday_training():
     pass
@@ -99,7 +132,7 @@ def cycle(exercises_table, first_exercise_in_next_cycle, color, bcolor):
             switch(exercises_table[index+1][0])
         else:
             countdown(exercise[1], exercise[0] , color, bcolor, first_exercise_in_next_cycle)
-            switch(exercises_table[index+1][0])
+            #switch(first_exercise_in_next_cycle)
             
 start_time = time.time()
 flush()
