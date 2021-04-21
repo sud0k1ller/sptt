@@ -1,4 +1,4 @@
-#!/usr/bin/python3 
+#!/usr/bin/python3
 
 import time
 import os
@@ -35,8 +35,10 @@ def rest(sec, comming_up):
     exercise(sec, "REST", colors.BLACK, bcolors.BLUE, comming_up)
 
 def training(cycles_list):
+    training_time = count_training_time(cycles_list)
+
     exercise(5, "COUNTDOWN", colors.BLACK, bcolors.WHITE, "WARMUP")
-    
+     
     for cycle_number in range(0, len(cycles_list) - 1):
         cycle_repetitions = cycles_list[cycle_number][2]
         for repetition in range(cycle_repetitions - 1):
@@ -55,62 +57,82 @@ def training_cycle(exercise_table, color, bcolor):
 
 def exercise(exercise_time, exercise_name, color, bcolor, comming_up):
     while exercise_time:
-        #handle_pause()
         print('\033[1m' + str(exercise_time) + colors.RESET + '\t' + color + bcolor + exercise_name + colors.RESET)
         print('\t\033[100mCOMMING UP: ' + comming_up + colors.RESET)
+        print("\nTIME IN TRAINING:")
+        print(str(datetime.timedelta(seconds = int(time.time() - start_time))))
+        print("\n\nTIME TO FINISH:")
+        print(str(datetime.timedelta(seconds = int(training_time - (time.time() - start_time - 1)))))
+        print("\n\nTOTAL TRAINING TIME:")
+        print(str(datetime.timedelta(seconds = training_time)))
+        #print("\n\n[SPACE] Pause/Resume")
         exercise_time -= 1
-        print("\nTRAINING TIME:")
-        print(str(datetime.timedelta(seconds=int(time.time() - start_time))))
-        print("\n\nTIME LEFT:")
-        print("00:00:00")
-        print("\n\n[SPACE] Pause/Resume")
         time.sleep(1)
         flush()    
 
 def count_training_time(cycles_list):
-    training_time = 0
-
-    for rest_time in
-    pass
+    training_time = 0 
+    for cycle in cycles_list:
+        cycle_repetitions_count = int(cycle[2]) 
+        training_time += cycle[1] * cycle_repetitions_count 
+        for exercise in cycle[0]:
+            training_time += exercise[1] * cycle_repetitions_count 
+    return training_time
 
 ##MAIN
-warmup_exercises =      [["ROPE JUMPING", 2],
-                        ["DYNAMIC STRETCH", 2]]
+warmup_exercises =      [["ROPE JUMPING", 120],
+                        ["DYNAMIC STRETCH", 180]]
 
-heavy_leg_workout = 	[["BULGARIAN SQUATS - LEFT LEG", 60],
+monday_workout = 	    [["BULGARIAN SQUATS - LEFT LEG", 60],
 				        ["BULGARIAN SQUATS - RIGHT LEG", 60],
 				        ["SQUAT JUMPS", 60],
 				        ["REVERSE LUNGES", 60],
-				        ["ALTERNATING INCLINE HIP THRUSTS", 60]]
-    
-light_chest_workout = 	[["PUSH UPS", 60], 
+				        ["ALTERNATING INCLINE HIP THRUSTS", 60],
+                        ["PUSH UPS", 60], 
 				        ["EXPLOSIVE PUSH UPS", 40], 
 				        ["90 DEGREE HOLD", 20]]
     
    
-back_and_arms_workout = [["SUPERMANS", 2], 
-			            ["TOWEL PULL UPS", 2], 
-				        ["TYI", 2], 
-				        ["ONE HANDED DOORPOST ROWS - RIGHT SIDE", 2], 
-				        ["ONE HANDED DOORPOST ROWS - LEFT SIDE", 2],
-				        ["DIAMOND PUSH UPS", 2], 
-				        ["REVERSE PUSH UPS", 2],
-				        ["PIKE PUSH UPS", 2]]
+back_and_arms_workout = [["SUPERMANS", 60], 
+			            ["TOWEL PULL UPS", 60], 
+				        ["TYI", 60], 
+				        ["ONE HANDED DOORPOST ROWS - RIGHT SIDE", 30], 
+				        ["ONE HANDED DOORPOST ROWS - LEFT SIDE", 30],
+				        ["DIAMOND PUSH UPS", 60], 
+				        ["REVERSE PUSH UPS", 60],
+				        ["PIKE PUSH UPS", 60]]
 
 core_A_workout = 		[["HIP LIFTS", 60], 
-				        ["SIDE PLANK - LEFT SIDE", 30] , 
+				        ["SIDE PLANK - LEFT SIDE", 30], 
 				        ["SIDE PLANK - RIGHT SIDE", 30], 
 				        ["RUSSIAN TWISTS", 60]]
     
-core_B_workout = 		[["KNEE TO ELBOW IN PLANK", 2], 
-				        ["SCISSORS", 2], 
-				        ["STRAIGHT LEGS LIFTS", 2]]
+core_B_workout = 		[["KNEE TO ELBOW IN PLANK", 60], 
+				        ["SCISSORS", 60], 
+				        ["STRAIGHT LEGS LIFTS", 60]]
 
 cooldown =              [["COOLDOWN", 300]]
 
-start_time = time.time()
-flush()
 
-#cycle_name, rest_time, cycle_repetition_count
-training([[warmup_exercises, 15, 1],[back_and_arms_workout, 3, 3], [core_B_workout, 3, 3], [cooldown, 0, 1])
+#MONDAY TRAINING
+monday_training =   [[warmup_exercises, 15, 1],
+                    [monday_workout, 60, 3],
+                    [core_A_workout, 30, 3],
+                    [cooldown, 0 , 1]]
+
+#WEDNESDAY TRAINING
+wednesday_training =   [[warmup_exercises, 15, 1],
+                        [back_and_arms_workout, 60, 3], 
+                        [core_B_workout, 30, 3], 
+                        [cooldown, 0, 1]]
+
+###
+# CHANGE HERE     \/ \/ \/ \/ \/ \/
+###
+training_cycles = wednesday_training
+
+start_time = time.time()
+training_time = count_training_time(training_cycles)
+flush()
+training(training_cycles)
 
