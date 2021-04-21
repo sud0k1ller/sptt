@@ -38,7 +38,6 @@ def training(cycles_list):
     training_time = count_training_time(cycles_list)
 
     exercise(5, "COUNTDOWN", colors.BLACK, bcolors.WHITE, cycles_list[0][0][0][0])
-     
     for cycle_number in range(0, len(cycles_list) - 1):
         cycle_repetitions = cycles_list[cycle_number][2]
         for repetition in range(cycle_repetitions - 1):
@@ -50,10 +49,13 @@ def training(cycles_list):
 
 def training_cycle(exercise_table, color, bcolor):
     for exercise_number in range(len(exercise_table) - 1):
+        os.system('\a')     
         exercise(exercise_table[exercise_number][1], exercise_table[exercise_number][0], colors.RED, bcolors.YELLOW, exercise_table[exercise_number + 1][0])
+        os.system('\a')     
         switch(exercise_table[exercise_number + 1][0])
+    os.system('\a')     
     exercise(exercise_table[-1][1], exercise_table[-1][0], colors.RED, bcolors.YELLOW, "REST")
-
+    os.system('\a')     
 
 def exercise(exercise_time, exercise_name, color, bcolor, comming_up):
     while exercise_time:
@@ -115,11 +117,11 @@ core_B_workout = 		[["KNEE TO ELBOW IN PLANK", 60],
 cooldown =              [["COOLDOWN", 300]]
 
 
-short_debug_cycle =     [["EX1", 1],
-                        ["EX2", 1],
-                        ["EX3", 1]]
+short_debug_cycle =     [["EX1", 5],
+                        ["EX2", 5],
+                        ["EX3", 5]]
 
-short_debug_cooldown =  [["COOLDOWN", 2]]
+short_debug_cooldown =  [["COOLDOWN", 5]]
 
 short_debug_training =  [[short_debug_cycle, 2, 2],
                         [short_debug_cooldown, 0, 1]]
