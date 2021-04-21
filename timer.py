@@ -140,10 +140,23 @@ wednesday_training =   [[warmup_exercises, 15, 1],
                         [core_B_workout, 30, 3], 
                         [cooldown, 0, 1]]
 
-###
-# CHANGE HERE     \/ \/ \/ \/ \/ \/
-###
-training_cycles = short_debug_training
+training_list = [   "[~45 min] Hard Legs + Light Chest + ABS Training",
+                    "[~45 min] Back + Arms + ABS Training"]
+
+training_choosen = False
+while not training_choosen:
+    flush()
+    print("\n")
+    for training_name, number in zip(training_list, range(1,len(training_list)+1)):
+        print("[" + str(number) + "]\t" + training_name)
+    
+    training_number = input("\nSelect Training Number: ")
+    if training_number == "1":
+        training_cycles = monday_training
+        training_choosen = True
+    if training_number == "2":
+        training_cycles = wednesday_training
+        training_choosen = True
 
 start_time = time.time()
 training_time = count_training_time(training_cycles)
