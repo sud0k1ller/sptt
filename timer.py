@@ -29,7 +29,7 @@ def flush():
     os.system("clear")
 
 def switch(comming_up):
-    exercise(1, "SWITCH", colors.BLACK, bcolors.WHITE, comming_up)
+    exercise(5, "SWITCH", colors.BLACK, bcolors.WHITE, comming_up)
 
 def rest(sec, comming_up):
     exercise(sec, "REST", colors.BLACK, bcolors.BLUE, comming_up)
@@ -37,7 +37,7 @@ def rest(sec, comming_up):
 def training(cycles_list):
     training_time = count_training_time(cycles_list)
 
-    exercise(5, "COUNTDOWN", colors.BLACK, bcolors.WHITE, "WARMUP")
+    exercise(5, "COUNTDOWN", colors.BLACK, bcolors.WHITE, cycles_list[0][0][0][0])
      
     for cycle_number in range(0, len(cycles_list) - 1):
         cycle_repetitions = cycles_list[cycle_number][2]
@@ -57,6 +57,7 @@ def training_cycle(exercise_table, color, bcolor):
 
 def exercise(exercise_time, exercise_name, color, bcolor, comming_up):
     while exercise_time:
+        flush()
         print('\033[1m' + str(exercise_time) + colors.RESET + '\t' + color + bcolor + exercise_name + colors.RESET)
         print('\t\033[100mCOMMING UP: ' + comming_up + colors.RESET)
         print("\nTIME IN TRAINING:")
@@ -68,16 +69,16 @@ def exercise(exercise_time, exercise_name, color, bcolor, comming_up):
         #print("\n\n[SPACE] Pause/Resume")
         exercise_time -= 1
         time.sleep(1)
-        flush()    
 
 def count_training_time(cycles_list):
-    training_time = 0 
+    training_time = 5                                                       # Initial Countdown Time 
     for cycle in cycles_list:
         cycle_repetitions_count = int(cycle[2]) 
-        training_time += cycle[1] * cycle_repetitions_count 
-        for exercise in cycle[0]:
-            training_time += exercise[1] * cycle_repetitions_count 
-    return training_time
+        training_time += cycle[1] * cycle_repetitions_count                 # Rests Times 
+        training_time += 5 * (len(cycle[0]) - 1) * cycle_repetitions_count   # Switch Times
+        for exercise in cycle[0]:   
+            training_time += exercise[1] * cycle_repetitions_count          # Exerises Times
+    return training_time 
 
 ##MAIN
 warmup_exercises =      [["ROPE JUMPING", 120],
@@ -114,6 +115,17 @@ core_B_workout = 		[["KNEE TO ELBOW IN PLANK", 60],
 cooldown =              [["COOLDOWN", 300]]
 
 
+short_debug_cycle =     [["EX1", 1],
+                        ["EX2", 1],
+                        ["EX3", 1]]
+
+short_debug_cooldown =  [["COOLDOWN", 2]]
+
+short_debug_training =  [[short_debug_cycle, 2, 2],
+                        [short_debug_cooldown, 0, 1]]
+
+
+
 #MONDAY TRAINING
 monday_training =   [[warmup_exercises, 15, 1],
                     [monday_workout, 60, 3],
@@ -129,10 +141,9 @@ wednesday_training =   [[warmup_exercises, 15, 1],
 ###
 # CHANGE HERE     \/ \/ \/ \/ \/ \/
 ###
-training_cycles = wednesday_training
+training_cycles = short_debug_training
 
 start_time = time.time()
 training_time = count_training_time(training_cycles)
-flush()
 training(training_cycles)
-
+input(colors.GREEN + bcolors.WHITE +  '\nNice Job!\nYou have done it!' + colors.RESET + '\nPress [Enter] to quit')
