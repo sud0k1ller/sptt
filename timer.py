@@ -65,10 +65,9 @@ def exercise(exercise_time, exercise_name, color, bcolor, comming_up):
         print("\nTIME IN TRAINING:")
         print(str(datetime.timedelta(seconds = int(time.time() - start_time))))
         print("\n\nTIME TO FINISH:")
-        print(str(datetime.timedelta(seconds = int(training_time - (time.time() - start_time - 1)))))
+        print(str(datetime.timedelta(seconds = int(training_time - (time.time() - start_time)))))
         print("\n\nTOTAL TRAINING TIME:")
         print(str(datetime.timedelta(seconds = training_time)))
-        #print("\n\n[SPACE] Pause/Resume")
         exercise_time -= 1
         time.sleep(1)
 
@@ -80,6 +79,7 @@ def count_training_time(cycles_list):
         training_time += 5 * (len(cycle[0]) - 1) * cycle_repetitions_count   # Switch Times
         for exercise in cycle[0]:   
             training_time += exercise[1] * cycle_repetitions_count          # Exerises Times
+    print(training_time)
     return training_time 
 
 ##MAIN
@@ -87,8 +87,8 @@ warmup_exercises =      [["ROPE JUMPING", 120],
                         ["DYNAMIC STRETCH", 180]]
 
 monday_workout = 	    [["BULGARIAN SQUATS - LEFT LEG", 60],
-				        ["BULGARIAN SQUATS - RIGHT LEG", 60],
-				        ["SQUAT JUMPS", 60],
+			            ["BULGARIAN SQUATS - RIGHT LEG", 60],
+			            ["SQUAT JUMPS", 60],
 				        ["REVERSE LUNGES", 60],
 				        ["ALTERNATING INCLINE HIP THRUSTS", 60],
                         ["PUSH UPS", 60], 
@@ -105,6 +105,19 @@ back_and_arms_workout = [["SUPERMANS", 60],
 				        ["REVERSE PUSH UPS", 60],
 				        ["PIKE PUSH UPS", 60]]
 
+
+friday_workout =        [["DECLINE PUSH UPS", 60],
+                        ["INCLINE PUSH UPS", 60],
+                        ["WIDE GRIP PUSH UPS", 30],
+                        ["NARROW GRIP PUSH UPS", 30],
+                        ["EXPLOSIVE INCLINE PUSH UPS", 40],
+                        ["90 DEGREE HOLD", 20],
+                        ["ALTERNATING FORWARD LUNGES", 60],
+                        ["SQUAT JUMPS", 60],
+                        ["ALTERNATING HIP THRUSTS", 60]]
+
+
+
 core_A_workout = 		[["HIP LIFTS", 60], 
 				        ["SIDE PLANK - LEFT SIDE", 30], 
 				        ["SIDE PLANK - RIGHT SIDE", 30], 
@@ -113,6 +126,11 @@ core_A_workout = 		[["HIP LIFTS", 60],
 core_B_workout = 		[["KNEE TO ELBOW IN PLANK", 60], 
 				        ["SCISSORS", 60], 
 				        ["STRAIGHT LEGS LIFTS", 60]]
+
+core_C_workout =        [["MOUNTAIN CLIMBERS", 60],
+                        ["BICYCYLE CRUNCHES", 60],
+                        ["PLANK", 60]]
+
 
 cooldown =              [["COOLDOWN", 300]]
 
@@ -132,7 +150,7 @@ short_debug_training =  [[short_debug_cycle, 2, 2],
 monday_training =   [[warmup_exercises, 15, 1],
                     [monday_workout, 60, 3],
                     [core_A_workout, 30, 3],
-                    [cooldown, 0 , 1]]
+                    [cooldown, 0, 1]]
 
 #WEDNESDAY TRAINING
 wednesday_training =   [[warmup_exercises, 15, 1],
@@ -140,10 +158,17 @@ wednesday_training =   [[warmup_exercises, 15, 1],
                         [core_B_workout, 30, 3], 
                         [cooldown, 0, 1]]
 
+friday_training =   [[warmup_exercises, 15, 1],
+                    [friday_workout, 60, 3],
+                    [core_C_workout, 30, 3],
+                    [cooldown, 0, 1]]
+                
 training_list = [   "[~45 min] Hard Legs + Light Chest + ABS Training",
-                    "[~45 min] Back + Arms + ABS Training"]
+                    "[~45 min] Back + Arms + ABS Training",
+                    "[~45 min] Hard Chest + Light Legs + ABS Training"]
 
 training_choosen = False
+
 while not training_choosen:
     flush()
     print("\n")
@@ -156,6 +181,9 @@ while not training_choosen:
         training_choosen = True
     if training_number == "2":
         training_cycles = wednesday_training
+        training_choosen = True
+    if training_number == "3":
+        training_cycles = friday_training
         training_choosen = True
 
 start_time = time.time()
